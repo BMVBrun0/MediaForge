@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { AppFrame } from "@/src/components/app-frame";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "MediaForge",
