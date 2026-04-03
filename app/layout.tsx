@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import Script from "next/script";
 import { AppFrame } from "@/src/components/app-frame";
 
 export const metadata: Metadata = {
@@ -17,6 +17,25 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>
         <AppFrame>{children}</AppFrame>
+
+        <Script id="accessibility-widget-config" strategy="beforeInteractive">
+          {`
+            window.AccessibilityWidgetConfig = {
+              appName: "MediaForge",
+              storageKey: "mediaforge-accessibility",
+              license: {
+                siteId: "mediaforge-production",
+                endpoint: "https://accessibility-widget-xi.vercel.app/api/license",
+                skipOnLocalhost: true
+              }
+            };
+          `}
+        </Script>
+
+        <Script
+          src="https://accessibility-widget-xi.vercel.app/dist/accessibility-widget.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
