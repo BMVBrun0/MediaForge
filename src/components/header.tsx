@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import { useOnlineStatus } from "@/src/lib/hooks/use-online-status";
 
 const navItems = [
-  { href: "/ferramenta", label: "Ferramenta" },
-  { href: "/historico", label: "Histórico" },
-  { href: "/como-usar", label: "Como usar" },
-  { href: "/sobre", label: "Sobre" },
+  { href: "/tool", label: "Ferramenta" },
+  { href: "/history", label: "Histórico" },
+  { href: "/how-it-works", label: "Como usar" },
+  { href: "/about", label: "Sobre" },
 ];
 
 export function Header({ onOpenSidebar }: { onOpenSidebar: () => void }) {
@@ -18,7 +18,7 @@ export function Header({ onOpenSidebar }: { onOpenSidebar: () => void }) {
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <Link href="/ferramenta" className="brand">
+        <Link href="/tool" className="brand">
           <span className="brand-mark">MF</span>
           <span className="brand-copy">
             <strong>MediaForge</strong>

@@ -10,10 +10,10 @@ export function Footer() {
         </div>
 
         <div className="footer-links">
-          <Link href="/ferramenta">Ferramenta</Link>
-          <Link href="/historico">Histórico</Link>
-          <Link href="/como-usar">Como usar</Link>
-          <Link href="/sobre">Sobre</Link>
+          <Link href="/tool">Ferramenta</Link>
+          <Link href="/history">Histórico</Link>
+          <Link href="/how-it-works">Como usar</Link>
+          <Link href="/about">Sobre</Link>
         </div>
       </div>
     </footer>

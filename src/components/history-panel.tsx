@@ -303,21 +303,21 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
 
         .history-copy-v2 h1 {
           margin: 0;
-          color: #17233c;
+          color: var(--text);
           line-height: 0.96;
           letter-spacing: -0.04em;
         }
 
         .history-copy-v2 p {
           margin: 12px 0 0;
-          color: #5d697d;
+          color: var(--text-soft);
           font-size: 1.02rem;
           line-height: 1.6;
         }
 
         .history-eyebrow-v2 {
           margin: 0 0 12px;
-          color: #635bff;
+          color: var(--brand-strong);
           text-transform: uppercase;
           letter-spacing: 0.18em;
           font-weight: 800;
@@ -342,7 +342,7 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
           transform: translateY(-50%);
           width: 18px;
           height: 18px;
-          color: #6f7788;
+          color: var(--text-soft);
           pointer-events: none;
         }
 
@@ -356,9 +356,9 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
           width: 100%;
           min-height: 56px;
           border-radius: 18px;
-          border: 1px solid #d6d8df;
-          background: #ffffff;
-          color: #16233a;
+          border: 1px solid var(--line);
+          background: var(--surface);
+          color: var(--text);
           padding: 0 18px 0 44px;
           font-size: 0.98rem;
           outline: none;
@@ -366,16 +366,16 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
         }
 
         .search-box-v2 input:focus {
-          border-color: #8c83ff;
-          box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.12);
+          border-color: var(--brand);
+          box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.14);
         }
 
         .clear-history-btn-v2 {
           min-height: 52px;
           border-radius: 16px;
-          border: 1px solid #d4c9b6;
-          background: #fffaf2;
-          color: #50371f;
+          border: 1px solid var(--line);
+          background: var(--bg-soft);
+          color: var(--text);
           font-weight: 800;
           padding: 0 18px;
           cursor: pointer;
@@ -384,8 +384,8 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
 
         .clear-history-btn-v2:hover {
           transform: translateY(-1px);
-          background: #fff4e6;
-          box-shadow: 0 10px 22px rgba(80, 55, 31, 0.08);
+          background: #eef4ff;
+          box-shadow: var(--shadow-sm);
         }
 
         .clear-history-btn-v2:active {
@@ -400,13 +400,13 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
           min-height: 42px;
           padding: 0 14px;
           border-radius: 999px;
-          background: #f3efe8;
-          color: #576273;
-          border: 1px solid #e6dfd3;
+          background: var(--surface-alt);
+          color: var(--text-soft);
+          border: 1px solid var(--line);
         }
 
         .history-counter-v2 strong {
-          color: #16233a;
+          color: var(--text);
         }
 
         .history-empty-v2 {
@@ -414,13 +414,13 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
           gap: 6px;
           padding: 28px;
           border-radius: 24px;
-          border: 1px dashed #d6d8df;
-          background: #fffdf8;
-          color: #5b6678;
+          border: 1px dashed var(--line-strong);
+          background: var(--bg-soft);
+          color: var(--text-soft);
         }
 
         .history-empty-v2 strong {
-          color: #18243d;
+          color: var(--text);
           font-size: 1.1rem;
         }
 
@@ -433,26 +433,26 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
           display: grid;
           overflow: hidden;
           border-radius: 28px;
-          border: 1px solid #ddd7cb;
+          border: 1px solid var(--line);
           background:
-            radial-gradient(circle at top right, rgba(110, 100, 255, 0.08), transparent 28%),
-            linear-gradient(180deg, #ffffff 0%, #fcfaf6 100%);
-          box-shadow: 0 18px 40px rgba(13, 26, 50, 0.07);
+            radial-gradient(circle at top right, rgba(124, 92, 255, 0.08), transparent 28%),
+            linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+          box-shadow: var(--shadow-md);
           transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.2s ease;
         }
 
         .history-card-v2:hover {
           transform: translateY(-3px);
-          border-color: #cfc7ba;
-          box-shadow: 0 22px 46px rgba(13, 26, 50, 0.1);
+          border-color: var(--line-strong);
+          box-shadow: 0 28px 54px rgba(15, 23, 42, 0.12);
         }
 
         .history-preview-v2 {
           position: relative;
           aspect-ratio: 16 / 10;
           background:
-            linear-gradient(135deg, #f5efe7 0%, #efe6d8 100%);
-          border-bottom: 1px solid #e8dfd1;
+            linear-gradient(135deg, #eef3ff 0%, #e8f0fa 100%);
+          border-bottom: 1px solid var(--line);
           overflow: hidden;
         }
 
@@ -469,9 +469,9 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
           place-items: center;
           gap: 10px;
           align-content: center;
-          color: #6c7787;
+          color: var(--text-soft);
           background:
-            linear-gradient(135deg, rgba(99, 91, 255, 0.08), rgba(37, 99, 235, 0.06));
+            linear-gradient(135deg, rgba(124, 92, 255, 0.1), rgba(34, 184, 255, 0.08));
         }
 
         .history-preview-fallback-v2 :global(svg) {
@@ -500,17 +500,17 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
           font-weight: 800;
           letter-spacing: 0.04em;
           backdrop-filter: blur(10px);
-          box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+          box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
         }
 
         .history-badge-v2.format {
           background: rgba(255, 255, 255, 0.88);
-          color: #1d2b46;
+          color: var(--text);
         }
 
         .history-badge-v2.mode {
-          background: rgba(23, 35, 60, 0.88);
-          color: #f8f9fb;
+          background: rgba(15, 23, 42, 0.86);
+          color: var(--text-on-dark);
         }
 
         .history-content-v2 {
@@ -521,7 +521,7 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
 
         .history-title-wrap-v2 h2 {
           margin: 0;
-          color: #16233a;
+          color: var(--text);
           font-size: clamp(1.15rem, 2vw, 1.55rem);
           line-height: 1.02;
           letter-spacing: -0.035em;
@@ -533,7 +533,7 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
 
         .history-title-wrap-v2 p {
           margin: 8px 0 0;
-          color: #6b7586;
+          color: var(--text-soft);
           font-size: 0.94rem;
         }
 
@@ -548,12 +548,12 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
           gap: 5px;
           padding: 14px;
           border-radius: 18px;
-          background: #f6f3ed;
-          border: 1px solid #ebe3d7;
+          background: var(--bg-soft);
+          border: 1px solid var(--line);
         }
 
         .history-stat-v2 span {
-          color: #7b8696;
+          color: var(--text-soft);
           font-size: 0.8rem;
           font-weight: 700;
           text-transform: uppercase;
@@ -561,14 +561,14 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
         }
 
         .history-stat-v2 strong {
-          color: #17233c;
+          color: var(--text);
           font-size: 1rem;
           line-height: 1.15;
         }
 
         .history-stat-v2.emphasis {
-          background: linear-gradient(135deg, #eef2ff 0%, #f3edff 100%);
-          border-color: #dcd4ff;
+          background: linear-gradient(135deg, #eef3ff 0%, #f5f1ff 100%);
+          border-color: #cec5ff;
         }
 
         .history-meta-strip-v2 {
@@ -583,9 +583,9 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
           min-height: 34px;
           padding: 0 12px;
           border-radius: 999px;
-          background: #f4efe6;
-          border: 1px solid #e5ddcf;
-          color: #5f6b7d;
+          background: var(--surface-alt);
+          border: 1px solid var(--line);
+          color: var(--text-soft);
           font-weight: 700;
           font-size: 0.84rem;
         }
@@ -631,36 +631,36 @@ export function HistoryPanel({ history, isHydrating, onDelete, onClearAll }: His
         }
 
         .action-btn-v2.primary {
-          background: #172b4d;
+          background: var(--surface-dark);
           color: #ffffff;
-          box-shadow: 0 14px 22px rgba(23, 43, 77, 0.16);
+          box-shadow: 0 16px 26px rgba(15, 23, 42, 0.16);
         }
 
         .action-btn-v2.primary:hover {
-          background: #102441;
-          box-shadow: 0 16px 26px rgba(23, 43, 77, 0.22);
+          background: #0b1220;
+          box-shadow: 0 18px 28px rgba(15, 23, 42, 0.2);
         }
 
         .action-btn-v2.neutral {
-          background: #ffffff;
-          color: #17233c;
-          border-color: #dcd6ca;
+          background: var(--surface);
+          color: var(--text);
+          border-color: var(--line);
         }
 
         .action-btn-v2.neutral:hover {
-          background: #faf8f3;
-          border-color: #cfc7bb;
+          background: var(--bg-soft);
+          border-color: var(--line-strong);
         }
 
         .action-btn-v2.danger {
-          background: #fff1f1;
-          color: #a13b4a;
-          border-color: #f0c7cd;
+          background: var(--danger-soft);
+          color: var(--danger);
+          border-color: #f4b9b4;
         }
 
         .action-btn-v2.danger:hover {
-          background: #ffe6e9;
-          border-color: #e7a8b2;
+          background: #fff0f0;
+          border-color: #ef9f98;
         }
 
         @media (min-width: 860px) {

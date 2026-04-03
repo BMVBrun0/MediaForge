@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
-  { href: "/ferramenta", label: "Ferramenta" },
-  { href: "/historico", label: "Histórico" },
-  { href: "/como-usar", label: "Como usar" },
-  { href: "/sobre", label: "Sobre" },
+  { href: "/tool", label: "Ferramenta" },
+  { href: "/history", label: "Histórico" },
+  { href: "/how-it-works", label: "Como usar" },
+  { href: "/about", label: "Sobre" },
 ];
 
 export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {

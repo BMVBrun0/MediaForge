@@ -483,12 +483,13 @@ export function ToolStudio() {
       );
 
       try {
-        const endpoint = mode === "compress" ? "/api/compress" : "/api/convert";
+        const endpoint = "/api/image/process";
         const formData = new FormData();
 
         formData.append("file", item.file);
         formData.append("quality", String(quality));
-        formData.append("format", outputFormat);
+        formData.append("mode", mode);
+        formData.append("outputFormat", outputFormat);
         formData.append("maxWidth", maxWidth || "");
         formData.append("maxHeight", maxHeight || "");
 
@@ -916,7 +917,7 @@ export function ToolStudio() {
 
         .tool-eyebrow-v4 {
           margin: 0 0 12px;
-          color: #655bff;
+          color: var(--brand-strong);
           text-transform: uppercase;
           letter-spacing: 0.18em;
           font-weight: 800;
@@ -925,14 +926,14 @@ export function ToolStudio() {
 
         .tool-hero-copy-v4 h1 {
           margin: 0;
-          color: #17233c;
+          color: var(--text);
           letter-spacing: -0.045em;
           line-height: 0.96;
         }
 
         .tool-hero-copy-v4 p {
           margin: 12px 0 0;
-          color: #5e697b;
+          color: var(--text-soft);
           font-size: 1.02rem;
           line-height: 1.6;
         }
@@ -961,20 +962,20 @@ export function ToolStudio() {
         }
 
         .status-pill-v4.dark {
-          background: #172b4d;
+          background: var(--surface-dark);
           color: #fff;
         }
 
         .status-pill-v4.soft {
-          background: #efe8dd;
-          color: #75513a;
-          border-color: #ddcdbb;
+          background: var(--surface-alt);
+          color: var(--text);
+          border-color: var(--line);
         }
 
         .status-pill-v4.success {
-          background: #e5f6ea;
-          color: #2d7a49;
-          border-color: #c6e8d1;
+          background: var(--green-soft);
+          color: var(--green);
+          border-color: #bfe9d2;
         }
 
         .tool-main-v4 {
@@ -988,9 +989,9 @@ export function ToolStudio() {
           gap: 18px;
           padding: 22px;
           border-radius: 28px;
-          border: 1px solid #ddd5c8;
-          background: linear-gradient(180deg, #fffdfa 0%, #faf6ef 100%);
-          box-shadow: 0 18px 34px rgba(20, 31, 53, 0.05);
+          border: 1px solid var(--line);
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(247, 250, 255, 0.98) 100%);
+          box-shadow: var(--shadow-sm);
         }
 
         .step-card-v4 {
@@ -998,12 +999,12 @@ export function ToolStudio() {
           gap: 18px;
           padding: 20px;
           border-radius: 22px;
-          background: #ffffff;
-          border: 1px solid #e7dfd2;
+          background: var(--surface);
+          border: 1px solid var(--line);
         }
 
         .step-card-v4.compact {
-          background: linear-gradient(180deg, #fffdf7 0%, #fbf7ef 100%);
+          background: linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%);
         }
 
         .step-header-v4 {
@@ -1019,23 +1020,23 @@ export function ToolStudio() {
           border-radius: 14px;
           display: grid;
           place-items: center;
-          background: #172b4d;
+          background: var(--surface-dark);
           color: #fff;
           font-size: 0.92rem;
           font-weight: 800;
-          box-shadow: 0 12px 22px rgba(23, 43, 77, 0.16);
+          box-shadow: 0 14px 24px rgba(15, 23, 42, 0.14);
         }
 
         .step-header-v4 h2 {
           margin: 0;
-          color: #17233c;
+          color: var(--text);
           font-size: clamp(1.15rem, 2vw, 1.4rem);
           letter-spacing: -0.03em;
         }
 
         .step-header-v4 p {
           margin: 6px 0 0;
-          color: #617083;
+          color: var(--text-soft);
           line-height: 1.55;
         }
 
@@ -1045,10 +1046,10 @@ export function ToolStudio() {
           gap: 14px;
           padding: 24px;
           border-radius: 24px;
-          border: 1px dashed #cdbfa8;
+          border: 1px dashed var(--line-strong);
           background:
-            radial-gradient(circle at top right, rgba(101, 91, 255, 0.08), transparent 28%),
-            linear-gradient(180deg, #fffdf9 0%, #fbf6ed 100%);
+            radial-gradient(circle at top right, rgba(124, 92, 255, 0.1), transparent 28%),
+            linear-gradient(180deg, #ffffff 0%, #f6faff 100%);
           cursor: pointer;
           transition: transform 0.18s ease, border-color 0.22s ease, box-shadow 0.22s ease;
         }
@@ -1056,8 +1057,8 @@ export function ToolStudio() {
         .dropzone-v4:hover,
         .dropzone-v4.is-dragging {
           transform: translateY(-1px);
-          border-color: #9f90ff;
-          box-shadow: 0 18px 28px rgba(101, 91, 255, 0.09);
+          border-color: var(--brand);
+          box-shadow: 0 18px 30px rgba(124, 92, 255, 0.14);
         }
 
         .hidden-input-v4 {
@@ -1070,9 +1071,9 @@ export function ToolStudio() {
           border-radius: 18px;
           display: grid;
           place-items: center;
-          background: #172b4d;
+          background: linear-gradient(135deg, var(--brand-strong) 0%, var(--accent) 100%);
           color: #fff;
-          box-shadow: 0 14px 24px rgba(23, 43, 77, 0.16);
+          box-shadow: 0 16px 28px rgba(124, 92, 255, 0.22);
         }
 
         .dropzone-icon-v4 :global(svg) {
@@ -1086,13 +1087,13 @@ export function ToolStudio() {
         }
 
         .dropzone-copy-v4 strong {
-          color: #17233c;
+          color: var(--text);
           font-size: clamp(1.2rem, 2vw, 1.45rem);
           letter-spacing: -0.03em;
         }
 
         .dropzone-copy-v4 span {
-          color: #617083;
+          color: var(--text-soft);
           line-height: 1.55;
           max-width: 62ch;
         }
@@ -1127,13 +1128,13 @@ export function ToolStudio() {
           cursor: pointer;
           font-weight: 800;
           color: #fff;
-          background: linear-gradient(135deg, #695bff 0%, #ff735c 100%);
-          box-shadow: 0 16px 24px rgba(105, 91, 255, 0.2);
+          background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%);
+          box-shadow: 0 18px 28px rgba(124, 92, 255, 0.22);
         }
 
         .gradient-button-v4:hover {
           transform: translateY(-2px);
-          box-shadow: 0 18px 28px rgba(105, 91, 255, 0.26);
+          box-shadow: 0 22px 32px rgba(124, 92, 255, 0.28);
         }
 
         .gradient-button-v4.large {
@@ -1156,8 +1157,8 @@ export function ToolStudio() {
           gap: 10px;
           padding: 6px;
           border-radius: 18px;
-          background: #f4efe7;
-          border: 1px solid #e3dbcf;
+          background: var(--surface-alt);
+          border: 1px solid var(--line);
         }
 
         .mode-chip-v4 {
@@ -1165,23 +1166,23 @@ export function ToolStudio() {
           border: 0;
           border-radius: 14px;
           background: transparent;
-          color: #617083;
+          color: var(--text-soft);
           cursor: pointer;
           font-weight: 800;
         }
 
         .mode-chip-v4.is-active {
-          background: #ffffff;
-          color: #17233c;
-          box-shadow: 0 12px 20px rgba(20, 31, 53, 0.08);
+          background: var(--surface);
+          color: var(--text);
+          box-shadow: var(--shadow-sm);
         }
 
         .mode-helper-v4 {
           padding: 14px 16px;
           border-radius: 18px;
-          background: #f9f4eb;
-          border: 1px solid #ece0ce;
-          color: #70543d;
+          background: var(--accent-soft);
+          border: 1px solid #bfe7ff;
+          color: #0f6ea8;
           line-height: 1.5;
           font-weight: 700;
         }
@@ -1197,12 +1198,12 @@ export function ToolStudio() {
         }
 
         .section-title-v4 span {
-          color: #17233c;
+          color: var(--text);
           font-weight: 800;
         }
 
         .section-title-v4 small {
-          color: #6c7788;
+          color: var(--text-soft);
           font-size: 0.92rem;
         }
 
@@ -1214,8 +1215,8 @@ export function ToolStudio() {
 
         .preset-card-v4 {
           text-align: left;
-          border: 1px solid #e3dbcf;
-          background: #fff;
+          border: 1px solid var(--line);
+          background: var(--surface);
           border-radius: 18px;
           padding: 14px;
           cursor: pointer;
@@ -1225,23 +1226,23 @@ export function ToolStudio() {
 
         .preset-card-v4:hover {
           transform: translateY(-2px);
-          border-color: #ccc0ff;
-          box-shadow: 0 14px 22px rgba(101, 91, 255, 0.08);
+          border-color: #c7bcff;
+          box-shadow: 0 16px 26px rgba(124, 92, 255, 0.12);
         }
 
         .preset-card-v4.is-active {
-          background: linear-gradient(180deg, #f5f2ff 0%, #fff 100%);
-          border-color: #c9c0ff;
-          box-shadow: 0 14px 22px rgba(101, 91, 255, 0.1);
+          background: linear-gradient(180deg, #f5f1ff 0%, #ffffff 100%);
+          border-color: #c7bcff;
+          box-shadow: 0 16px 28px rgba(124, 92, 255, 0.14);
         }
 
         .preset-card-v4 strong {
-          color: #17233c;
+          color: var(--text);
           font-size: 0.98rem;
         }
 
         .preset-card-v4 span {
-          color: #6d7787;
+          color: var(--text-soft);
           line-height: 1.45;
           font-size: 0.9rem;
         }
@@ -1258,7 +1259,7 @@ export function ToolStudio() {
         }
 
         .field-v4 span {
-          color: #17233c;
+          color: var(--text);
           font-weight: 800;
         }
 
@@ -1267,9 +1268,9 @@ export function ToolStudio() {
           width: 100%;
           min-height: 52px;
           border-radius: 16px;
-          border: 1px solid #dccfb9;
-          background: #fff;
-          color: #17233c;
+          border: 1px solid var(--line-strong);
+          background: var(--surface);
+          color: var(--text);
           padding: 0 14px;
           outline: none;
           font-size: 0.96rem;
@@ -1278,13 +1279,13 @@ export function ToolStudio() {
 
         .field-v4 select:focus,
         .field-v4 input[type="number"]:focus {
-          border-color: #8c83ff;
-          box-shadow: 0 0 0 4px rgba(101, 91, 255, 0.12);
+          border-color: var(--brand);
+          box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.14);
         }
 
         .range-field-v4 input[type="range"] {
           width: 100%;
-          accent-color: #655bff;
+          accent-color: var(--brand-strong);
         }
 
         .quick-stats-v4 {
@@ -1298,12 +1299,12 @@ export function ToolStudio() {
           gap: 6px;
           padding: 16px;
           border-radius: 18px;
-          background: #fff;
-          border: 1px solid #e7dfd2;
+          background: var(--surface);
+          border: 1px solid var(--line);
         }
 
         .quick-stat-v4 span {
-          color: #7b8796;
+          color: var(--text-soft);
           font-size: 0.8rem;
           text-transform: uppercase;
           letter-spacing: 0.06em;
@@ -1311,7 +1312,7 @@ export function ToolStudio() {
         }
 
         .quick-stat-v4 strong {
-          color: #17233c;
+          color: var(--text);
           font-size: 1.1rem;
         }
 
@@ -1324,9 +1325,9 @@ export function ToolStudio() {
         .ghost-button-v4 {
           min-height: 52px;
           border-radius: 16px;
-          border: 1px solid #d8cdb9;
-          background: #fffaf3;
-          color: #4d3928;
+          border: 1px solid var(--line);
+          background: var(--bg-soft);
+          color: var(--text);
           cursor: pointer;
           padding: 0 18px;
           font-weight: 800;
@@ -1334,19 +1335,19 @@ export function ToolStudio() {
 
         .ghost-button-v4:hover {
           transform: translateY(-1px);
-          background: #fff3e2;
-          box-shadow: 0 12px 18px rgba(77, 57, 40, 0.08);
+          background: #eef4ff;
+          box-shadow: var(--shadow-sm);
         }
 
         .queue-header-v4 h2 {
           margin: 0;
-          color: #17233c;
+          color: var(--text);
           letter-spacing: -0.03em;
         }
 
         .queue-header-v4 p:last-child {
           margin: 10px 0 0;
-          color: #607084;
+          color: var(--text-soft);
           line-height: 1.6;
         }
 
@@ -1356,24 +1357,24 @@ export function ToolStudio() {
           gap: 10px;
           padding: 34px 24px;
           border-radius: 24px;
-          border: 1px dashed #d8cdb9;
-          background: #fffdf8;
+          border: 1px dashed var(--line-strong);
+          background: var(--bg-soft);
           text-align: center;
         }
 
         .queue-empty-v4 :global(svg) {
           width: 28px;
           height: 28px;
-          color: #655bff;
+          color: var(--brand-strong);
         }
 
         .queue-empty-v4 strong {
-          color: #17233c;
+          color: var(--text);
           font-size: 1.08rem;
         }
 
         .queue-empty-v4 span {
-          color: #697486;
+          color: var(--text-soft);
           line-height: 1.6;
           max-width: 54ch;
         }
@@ -1389,16 +1390,16 @@ export function ToolStudio() {
           gap: 16px;
           padding: 16px;
           border-radius: 24px;
-          background: #fff;
-          border: 1px solid #e7dfd2;
-          box-shadow: 0 14px 24px rgba(20, 31, 53, 0.05);
+          background: var(--surface);
+          border: 1px solid var(--line);
+          box-shadow: var(--shadow-sm);
         }
 
         .queue-preview-v4 {
           aspect-ratio: 4 / 3;
           overflow: hidden;
           border-radius: 18px;
-          background: linear-gradient(135deg, #f5efe7 0%, #ece3d6 100%);
+          background: linear-gradient(135deg, #eef3ff 0%, #e9f1fa 100%);
         }
 
         .queue-preview-v4 img {
@@ -1423,7 +1424,7 @@ export function ToolStudio() {
 
         .queue-title-wrap-v4 h3 {
           margin: 0;
-          color: #17233c;
+          color: var(--text);
           font-size: 1.15rem;
           line-height: 1.08;
           letter-spacing: -0.03em;
@@ -1432,7 +1433,7 @@ export function ToolStudio() {
 
         .queue-title-wrap-v4 p {
           margin: 6px 0 0;
-          color: #748093;
+          color: var(--text-soft);
           font-size: 0.92rem;
         }
 
@@ -1448,23 +1449,23 @@ export function ToolStudio() {
         }
 
         .queue-status-v4.idle {
-          background: #efe8dd;
-          color: #71533a;
+          background: var(--surface-alt);
+          color: var(--text-soft);
         }
 
         .queue-status-v4.processing {
-          background: #edf1ff;
-          color: #4256cc;
+          background: var(--accent-soft);
+          color: #0f6ea8;
         }
 
         .queue-status-v4.done {
-          background: #e7f6ec;
-          color: #2b7a48;
+          background: var(--green-soft);
+          color: var(--green);
         }
 
         .queue-status-v4.error {
-          background: #fff0f0;
-          color: #aa3d48;
+          background: var(--danger-soft);
+          color: var(--danger);
         }
 
         .queue-metrics-v4 {
@@ -1479,16 +1480,16 @@ export function ToolStudio() {
           border-radius: 999px;
           display: inline-flex;
           align-items: center;
-          background: #f6f1e8;
-          border: 1px solid #e8decf;
-          color: #606c7c;
+          background: var(--bg-soft);
+          border: 1px solid var(--line);
+          color: var(--text-soft);
           font-size: 0.86rem;
           font-weight: 700;
         }
 
         .queue-error-v4 {
           margin: 0;
-          color: #b23a49;
+          color: var(--danger);
           font-weight: 700;
           line-height: 1.5;
         }
@@ -1503,7 +1504,7 @@ export function ToolStudio() {
           min-height: 46px;
           border-radius: 16px;
           border: 1px solid transparent;
-          background: #fff;
+          background: var(--surface);
           padding: 0 14px;
           display: inline-flex;
           align-items: center;
@@ -1523,32 +1524,32 @@ export function ToolStudio() {
         }
 
         .action-button-v4.primary {
-          background: #172b4d;
+          background: linear-gradient(135deg, var(--brand-strong) 0%, var(--accent) 100%);
           color: #fff;
-          box-shadow: 0 12px 20px rgba(23, 43, 77, 0.16);
+          box-shadow: 0 16px 28px rgba(124, 92, 255, 0.22);
         }
 
         .action-button-v4.primary:hover {
-          box-shadow: 0 16px 24px rgba(23, 43, 77, 0.22);
+          box-shadow: 0 16px 26px rgba(15, 23, 42, 0.18);
         }
 
         .action-button-v4.neutral {
-          border-color: #ddd2be;
-          color: #17233c;
+          border-color: var(--line);
+          color: var(--text);
         }
 
         .action-button-v4.neutral:hover {
-          background: #faf6ef;
+          background: var(--bg-soft);
         }
 
         .action-button-v4.danger {
-          border-color: #efc9cf;
-          background: #fff2f2;
-          color: #a73b49;
+          border-color: #f4b9b4;
+          background: var(--danger-soft);
+          color: var(--danger);
         }
 
         .action-button-v4.danger:hover {
-          background: #ffe7ea;
+          background: #fff0f0;
         }
 
         @media (min-width: 980px) {

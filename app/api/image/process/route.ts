@@ -1,3 +1,4 @@
+// app/api/image/process/route.ts
 import sharp from "sharp";
 import type { OutputFormat, ToolMode } from "@/src/lib/types";
 
@@ -5,7 +6,12 @@ export const runtime = "nodejs";
 
 const SUPPORTED_OUTPUT_FORMATS: OutputFormat[] = ["jpeg", "png", "webp", "avif"];
 
-function clampNumber(input: FormDataEntryValue | null, fallback: number, min: number, max: number): number {
+function clampNumber(
+  input: FormDataEntryValue | null,
+  fallback: number,
+  min: number,
+  max: number,
+): number {
   const value = Number(input);
 
   if (!Number.isFinite(value)) {
@@ -25,12 +31,16 @@ function normalizeOriginalFormat(format?: string | null): OutputFormat {
     case "jpeg":
     case "jpg":
       return "jpeg";
+
     case "png":
       return "png";
+
     case "webp":
       return "webp";
+
     case "avif":
       return "avif";
+
     default:
       return "webp";
   }
@@ -78,6 +88,7 @@ async function buildOutputBuffer(
   switch (outputFormat) {
     case "jpeg":
       return pipeline.jpeg({ quality, mozjpeg: true }).toBuffer();
+
     case "png":
       return pipeline
         .png({
@@ -87,8 +98,10 @@ async function buildOutputBuffer(
           palette: quality < 92,
         })
         .toBuffer();
+
     case "avif":
       return pipeline.avif({ quality }).toBuffer();
+
     case "webp":
     default:
       return pipeline.webp({ quality }).toBuffer();
@@ -101,7 +114,10 @@ export async function POST(request: Request) {
     const file = formData.get("file");
 
     if (!(file instanceof File)) {
-      return Response.json({ error: "O arquivo de imagem é obrigatório." }, { status: 400 });
+      return Response.json(
+        { error: "O arquivo de imagem é obrigatório." },
+        { status: 400 },
+      );
     }
 
     const mode = (formData.get("mode") === "convert" ? "convert" : "compress") as ToolMode;
@@ -115,17 +131,32 @@ export async function POST(request: Request) {
     const outputFormat = resolveOutputFormat(mode, formData.get("outputFormat"), originalFormat);
 
     if (!SUPPORTED_OUTPUT_FORMATS.includes(outputFormat)) {
-      return Response.json({ error: "Formato de saída não suportado." }, { status: 400 });
+      return Response.json(
+        { error: "Formato de saída não suportado." },
+        { status: 400 },
+      );
     }
 
-    const outputBuffer = await buildOutputBuffer(inputBuffer, outputFormat, quality, maxWidth, maxHeight);
+    const outputBuffer = await buildOutputBuffer(
+      inputBuffer,
+      outputFormat,
+      quality,
+      maxWidth,
+      maxHeight,
+    );
+
     const outputMetadata = await sharp(outputBuffer).metadata();
 
-    return new Response(outputBuffer, {
+    // Converte Buffer -> Uint8Array para ficar compatível com BodyInit na build da Vercel
+    const responseBody = new Uint8Array(outputBuffer);
+
+    return new Response(responseBody, {
       status: 200,
       headers: {
         "Content-Type": `image/${outputFormat === "jpeg" ? "jpeg" : outputFormat}`,
-        "Content-Disposition": `attachment; filename="resultado.${outputFormat === "jpeg" ? "jpg" : outputFormat}"`,
+        "Content-Disposition": `attachment; filename="resultado.${
+          outputFormat === "jpeg" ? "jpg" : outputFormat
+        }"`,
         "Cache-Control": "no-store",
         "X-Original-Size": String(inputBuffer.byteLength),
         "X-Output-Size": String(outputBuffer.byteLength),
@@ -135,7 +166,11 @@ export async function POST(request: Request) {
       },
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Erro inesperado ao processar a imagem.";
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Erro inesperado ao processar a imagem.";
+
     return Response.json({ error: message }, { status: 500 });
   }
 }
