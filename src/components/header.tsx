@@ -1,10 +1,11 @@
 "use client";
 
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useOnlineStatus } from "@/src/lib/hooks/use-online-status";
 
-const navItems = [
+const navItems: Array<{ href: Route; label: string }> = [
   { href: "/tool", label: "Ferramenta" },
   { href: "/history", label: "Histórico" },
   { href: "/how-it-works", label: "Como usar" },

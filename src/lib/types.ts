@@ -43,3 +43,5 @@ export interface HistoryRecord {
 }
 
 export interface PersistedHistoryRecord extends HistoryRecord {}
+
+export type InfoTab = "historico" | "guia" | "sobre";
