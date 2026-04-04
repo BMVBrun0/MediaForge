@@ -26,15 +26,14 @@ export default function RootLayout({
               storageKey: "mediaforge-accessibility",
               license: {
                 siteId: "mediaforge-production",
-                endpoint: "https://accessibility-widget-xi.vercel.app/api/license",
-                skipOnLocalhost: true
+                endpoint: "https://accessibility-widget-xi.vercel.app/api/license"
               }
             };
           `}
         </Script>
 
         <Script
-          src="https://accessibility-widget-xi.vercel.app/dist/accessibility-widget.js"
+          src="https://accessibility-widget-xi.vercel.app/dist/accessibility-widget.js?v=3"
           strategy="afterInteractive"
         />
       </body>
