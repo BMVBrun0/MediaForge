@@ -1,5 +1,5 @@
-import { HistoryPage } from "@/src/components/history-page";
+import { HistoryWorkspace } from "@/src/components/history-workspace";
 
-export default function HistoryRoutePage() {
-  return <HistoryPage />;
+export default function HistoryPage() {
+  return <HistoryWorkspace />;
 }

@@ -1,8 +1,11 @@
-
 node_modules
 .next
-coverage
-dist
-.vscode
-.DS_Store
+out
+.vercel
+.env
+.env.local
+.env.*.local
 *.log
+.DS_Store
+tsconfig.tsbuildinfo
+coverage

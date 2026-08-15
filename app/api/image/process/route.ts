@@ -1,141 +1,60 @@
 import sharp from "sharp";
-import type { OutputFormat, ToolMode } from "@/src/lib/types";
 
 export const runtime = "nodejs";
 
-const SUPPORTED_OUTPUT_FORMATS: OutputFormat[] = ["jpeg", "png", "webp", "avif"];
+const MAX_FILE_BYTES = 4_000_000;
+const MAX_PIXELS = 50_000_000;
+const SUPPORTED_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
+type OutputFormat = "jpeg" | "png" | "webp" | "avif";
 
-function clampNumber(input: FormDataEntryValue | null, fallback: number, min: number, max: number): number {
-  const value = Number(input);
-
-  if (!Number.isFinite(value)) {
-    return fallback;
-  }
-
-  return Math.min(Math.max(value, min), max);
+function numberValue(value: FormDataEntryValue | null, fallback: number, min: number, max: number) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.min(max, Math.max(min, parsed));
 }
 
-function optionalNumber(input: FormDataEntryValue | null): number | undefined {
-  const value = Number(input);
-  return Number.isFinite(value) && value > 0 ? value : undefined;
-}
-
-function normalizeOriginalFormat(format?: string | null): OutputFormat {
-  switch (format) {
-    case "jpeg":
-    case "jpg":
-      return "jpeg";
-    case "png":
-      return "png";
-    case "webp":
-      return "webp";
-    case "avif":
-      return "avif";
-    default:
-      return "webp";
-  }
-}
-
-function resolveOutputFormat(
-  mode: ToolMode,
-  requestedOutput: FormDataEntryValue | null,
-  originalFormat: OutputFormat,
-): OutputFormat {
-  if (mode === "compress") {
-    return originalFormat;
-  }
-
-  if (
-    requestedOutput === "jpeg" ||
-    requestedOutput === "png" ||
-    requestedOutput === "webp" ||
-    requestedOutput === "avif"
-  ) {
-    return requestedOutput;
-  }
-
-  return "webp";
-}
-
-async function buildOutputBuffer(
-  inputBuffer: Buffer,
-  outputFormat: OutputFormat,
-  quality: number,
-  maxWidth?: number,
-  maxHeight?: number,
-) {
-  let pipeline = sharp(inputBuffer).rotate();
-
-  if (maxWidth || maxHeight) {
-    pipeline = pipeline.resize({
-      width: maxWidth,
-      height: maxHeight,
-      fit: "inside",
-      withoutEnlargement: true,
-    });
-  }
-
-  switch (outputFormat) {
-    case "jpeg":
-      return pipeline.jpeg({ quality, mozjpeg: true }).toBuffer();
-    case "png":
-      return pipeline
-        .png({
-          compressionLevel: 9,
-          quality,
-          progressive: true,
-          palette: quality < 92,
-        })
-        .toBuffer();
-    case "avif":
-      return pipeline.avif({ quality }).toBuffer();
-    case "webp":
-    default:
-      return pipeline.webp({ quality }).toBuffer();
-  }
+function outputFormat(value: FormDataEntryValue | null): OutputFormat {
+  return value === "jpeg" || value === "png" || value === "avif" || value === "webp" ? value : "webp";
 }
 
 export async function POST(request: Request) {
   try {
-    const formData = await request.formData();
-    const file = formData.get("file");
+    const form = await request.formData();
+    const file = form.get("file");
+    if (!(file instanceof File)) return Response.json({ error: "Selecione uma imagem." }, { status: 400 });
+    if (!SUPPORTED_TYPES.has(file.type)) return Response.json({ error: "Formato de entrada não suportado." }, { status: 415 });
+    if (file.size > MAX_FILE_BYTES) return Response.json({ error: "Para esta operação remota, use uma imagem de até 4 MB." }, { status: 413 });
 
-    if (!(file instanceof File)) {
-      return Response.json({ error: "O arquivo de imagem é obrigatório." }, { status: 400 });
-    }
+    const quality = numberValue(form.get("quality"), 82, 35, 100);
+    const maxWidth = numberValue(form.get("maxWidth"), 0, 0, 8000) || undefined;
+    const format = outputFormat(form.get("outputFormat"));
+    const input = Buffer.from(await file.arrayBuffer());
+    const base = sharp(input, { failOn: "error", limitInputPixels: MAX_PIXELS }).rotate();
+    const meta = await base.metadata();
+    if ((meta.width ?? 0) * (meta.height ?? 0) > MAX_PIXELS) return Response.json({ error: "A imagem excede o limite de 50 megapixels." }, { status: 413 });
 
-    const mode = (formData.get("mode") === "convert" ? "convert" : "compress") as ToolMode;
-    const quality = clampNumber(formData.get("quality"), 82, 35, 100);
-    const maxWidth = optionalNumber(formData.get("maxWidth"));
-    const maxHeight = optionalNumber(formData.get("maxHeight"));
+    let pipeline = sharp(input, { failOn: "error", limitInputPixels: MAX_PIXELS }).rotate();
+    if (maxWidth) pipeline = pipeline.resize({ width: maxWidth, fit: "inside", withoutEnlargement: true });
 
-    const inputBuffer = Buffer.from(await file.arrayBuffer());
-    const originalMetadata = await sharp(inputBuffer).metadata();
-    const originalFormat = normalizeOriginalFormat(originalMetadata.format);
-    const outputFormat = resolveOutputFormat(mode, formData.get("outputFormat"), originalFormat);
+    if (format === "jpeg") pipeline = pipeline.jpeg({ quality, mozjpeg: true });
+    else if (format === "png") pipeline = pipeline.png({ compressionLevel: 9, progressive: true });
+    else if (format === "avif") pipeline = pipeline.avif({ quality, effort: 4 });
+    else pipeline = pipeline.webp({ quality, effort: 4 });
 
-    if (!SUPPORTED_OUTPUT_FORMATS.includes(outputFormat)) {
-      return Response.json({ error: "Formato de saída não suportado." }, { status: 400 });
-    }
-
-    const outputBuffer = await buildOutputBuffer(inputBuffer, outputFormat, quality, maxWidth, maxHeight);
-    const outputMetadata = await sharp(outputBuffer).metadata();
-
-    return new Response(new Uint8Array(outputBuffer), {
-      status: 200,
+    const output = await pipeline.toBuffer();
+    const outMeta = await sharp(output).metadata();
+    return new Response(new Uint8Array(output), {
       headers: {
-        "Content-Type": `image/${outputFormat === "jpeg" ? "jpeg" : outputFormat}`,
-        "Content-Disposition": `attachment; filename="resultado.${outputFormat === "jpeg" ? "jpg" : outputFormat}"`,
+        "Content-Type": format === "jpeg" ? "image/jpeg" : `image/${format}`,
         "Cache-Control": "no-store",
-        "X-Original-Size": String(inputBuffer.byteLength),
-        "X-Output-Size": String(outputBuffer.byteLength),
-        "X-Output-Format": outputFormat,
-        "X-Output-Width": String(outputMetadata.width ?? ""),
-        "X-Output-Height": String(outputMetadata.height ?? ""),
+        "X-Original-Size": String(input.byteLength),
+        "X-Output-Size": String(output.byteLength),
+        "X-Output-Width": String(outMeta.width ?? ""),
+        "X-Output-Height": String(outMeta.height ?? ""),
       },
     });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Erro inesperado ao processar a imagem.";
+  } catch (cause) {
+    const message = cause instanceof Error ? cause.message : "Falha ao processar a imagem.";
     return Response.json({ error: message }, { status: 500 });
   }
 }

@@ -1,47 +1,39 @@
-export type ToolMode = "compress" | "convert";
-export type OutputFormat = "jpeg" | "png" | "webp" | "avif";
-export type QueueStatus = "queued" | "processing" | "done" | "error";
+export type ToolCategory = "image" | "video" | "security" | "assets";
 
-export interface ProcessOptions {
-  mode: ToolMode;
-  outputFormat: OutputFormat;
-  quality: number;
-  maxWidth?: number;
-  maxHeight?: number;
+export interface ToolHelp {
+  summary: string;
+  input: string;
+  steps: string[];
+  expected: string;
+  note?: string;
 }
 
-export interface QueueItem {
-  id: string;
-  file: File;
-  sourceUrl: string;
-  status: QueueStatus;
-  sourceName: string;
-  sourceSize: number;
-  sourceType: string;
-  outputUrl?: string;
-  outputName?: string;
-  outputSize?: number;
-  outputType?: string;
-  width?: number;
-  height?: number;
-  message?: string;
-}
-
-export interface HistoryRecord {
+export interface ToolDefinition {
   id: string;
   name: string;
-  createdAt: string;
-  mode: ToolMode;
-  outputFormat: OutputFormat;
-  quality: number;
-  originalSize: number;
-  outputSize: number;
-  outputType: string;
-  width?: number;
-  height?: number;
-  blob: Blob;
+  shortName: string;
+  description: string;
+  category: ToolCategory;
+  icon: string;
+  badge?: string;
+  localOnly?: boolean;
+  help: ToolHelp;
 }
 
-export interface PersistedHistoryRecord extends HistoryRecord {}
+export interface ArtifactRecord {
+  id: string;
+  toolId: string;
+  title: string;
+  summary: string;
+  createdAt: string;
+  outputName?: string;
+  outputType?: string;
+  outputSize?: number;
+  blob?: Blob;
+}
 
-export type InfoTab = "historico" | "guia" | "sobre";
+export interface RgbColor {
+  r: number;
+  g: number;
+  b: number;
+}

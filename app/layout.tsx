@@ -4,21 +4,15 @@ import { AppFrame } from "@/src/components/app-frame";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MediaForge",
-  description:
-    "Ferramenta web para compactação e conversão de imagens, com fila de processamento e histórico local.",
+  title: "MediaForge — Ferramentas de mídia e arquivos",
+  description: "Ferramentas de imagem, vídeo, segurança de arquivos e recursos visuais em uma única interface.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
       <body>
         <AppFrame>{children}</AppFrame>
-
         <Script id="accessibility-widget-config" strategy="beforeInteractive">
           {`
             window.AccessibilityWidgetConfig = {
@@ -31,11 +25,7 @@ export default function RootLayout({
             };
           `}
         </Script>
-
-        <Script
-          src="https://accessibility-widget-xi.vercel.app/dist/accessibility-widget.js?v=3"
-          strategy="afterInteractive"
-        />
+        <Script src="https://accessibility-widget-xi.vercel.app/dist/latest/accessibility-widget.js" strategy="afterInteractive" />
       </body>
     </html>
   );
