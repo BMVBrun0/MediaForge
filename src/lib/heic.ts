@@ -77,7 +77,7 @@ export function looksLikeHeic(file: File | Blob, name = "") {
 
 export async function heicToJpeg(input: File | Blob, quality = 0.94): Promise<Blob> {
   const runtime = await getRuntime();
-  const converter = typeof runtime === "function" ? runtime : runtime.heicTo;
+  const converter = runtime.heicTo ?? runtime;
   if (!converter) throw new Error("Decoder HEIC carregado sem a API de conversão esperada.");
   const output = await converter({ blob: input, type: "image/jpeg", quality });
   const first = Array.isArray(output) ? output[0] : output;
