@@ -50,8 +50,15 @@ textarea { resize: vertical; }
 .mobile-menu, .mobile-nav { display: none; }
 .icon-button { width: 40px; height: 40px; border: 1px solid var(--line); background: rgba(15, 23, 42, .7); border-radius: 12px; display: inline-grid; place-items: center; }
 .icon-button.mobile-menu { display: none; }
-.app-footer { min-height: 68px; border-top: 1px solid var(--line); color: var(--text-soft); display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 0 max(22px, calc((100vw - 1480px) / 2)); font-size: .78rem; }
-.app-footer span:first-child { color: #dce6f5; font-weight: 800; }
+.app-footer { min-height: 92px; border-top: 1px solid var(--line); color: var(--text-soft); display: flex; justify-content: space-between; gap: 18px; align-items: center; padding: 14px max(22px, calc((100vw - 1480px) / 2)); font-size: .78rem; }
+.app-footer-main { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.app-footer-main span:first-child { color: #dce6f5; font-weight: 800; }
+.developer-credit { display: inline-flex; align-items: center; justify-content: center; gap: 7px; color: #7f8ba3; font-size: 10px; text-decoration: none; }
+.developer-credit img { width: 19px; height: 24px; object-fit: contain; }
+.developer-credit span { display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap; }
+.developer-credit strong { color: #c2cde0; }
+.developer-credit i { font-style: normal; color: #4c5870; }
+.developer-credit:hover { color: #b8c8df; }
 
 .mobile-drawer-layer { position: fixed; inset: 0; z-index: 140; background: rgba(2,6,15,.72); backdrop-filter: blur(8px); display: flex; justify-content: flex-end; }
 .mobile-drawer { width: min(390px, 92vw); height: 100dvh; overflow-y: auto; background: #080e1b; border-left: 1px solid var(--line); box-shadow: -26px 0 70px rgba(0,0,0,.42); padding: 14px; display: grid; align-content: start; gap: 14px; }
@@ -364,6 +371,8 @@ textarea { resize: vertical; }
   .topbar-inner { width: calc(100% - 18px); }
   .brand-logo { width: 174px; height: 46px; }
   .app-footer { flex-direction: column; align-items: flex-start; justify-content: center; padding: 16px; }
+  .app-footer-main { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .developer-credit { width: 100%; justify-content: flex-start; }
   .tool-stage-header { grid-template-columns: 1fr; }
   .tool-title-icon { display: none; }
   .tool-stage-copy { padding-right: 38px; }

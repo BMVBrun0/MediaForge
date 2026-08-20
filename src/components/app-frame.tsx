@@ -93,8 +93,14 @@ export function AppFrame({ children }: { children: React.ReactNode }) {
 
       <main>{children}</main>
       <footer className="app-footer">
-        <span>MediaForge</span>
-        <span>Processamento sensível priorizado no dispositivo.</span>
+        <div className="app-footer-main">
+          <span>MediaForge</span>
+          <span>Processamento sensível priorizado no dispositivo.</span>
+        </div>
+        <a className="developer-credit" href="mailto:trichesbruno@gmail.com" aria-label="Projeto desenvolvido por Bruno Getten Triches">
+          <img src="/bm-mark-footer.png" alt="" aria-hidden="true" />
+          <span>Projeto desenvolvido por <strong>Bruno Getten Triches</strong><i>·</i>trichesbruno@gmail.com</span>
+        </a>
       </footer>
     </div>
   );
